@@ -20,6 +20,44 @@
 // Attempt to print out the permissions in ls -l form, ignoring the early bits that include the file type information
 // Permissions are of type mode_t, which is an integer type.
 // The permissions section of the mode is stored in the last 9 bits of the mode_t data type.
+
+char * convertpermissions(char * c){ //mode_t
+  char s[100]; //storage
+  int i;
+  for (i = 3; i < 6; i++){
+    if (*(c + i) == '0'){
+      s = strcat(s, "---");
+    }
+    else if (*(c + i) == '1'){
+      s = strcat(s, "--x");
+    }
+    else if (*(c + i) == '2'){
+      s = strcat(s, "-w-");
+    }
+    else if (*(c + i) == '3'){
+      s = strcat(s, "-wx");
+    }
+    else if (*(c + i) == '4'){
+      s = strcat(s, "r--");
+    }
+    else if (*(c + i) == '5'){
+      s = strcat(s, "r-x");
+    }
+    else if (*(c + i) == '6'){
+      s = strcat(s, "rw-");
+    }
+    else{
+      s = strcat(s, "rwx");
+    }
+    return s;
+  }
+//   sprintf ( string, “%d %c %f”, value, c, flt ) ;
+//
+// where,
+// string – buffer to  put the data in.
+// value – int variable, c – char variable and flt – float variable. There are for example only. You can use any specifiers.
+}
+
 int main(){
   struct stat buffer;
   stat("./statfile.c", &buffer);
@@ -30,6 +68,8 @@ int main(){
   printf("Printing file size in GB: %lf\n", bytesize / 1024.000 / 1024.000 / 1024.000);
   printf("Printing file permissions: %o\n", buffer.st_mode);
   printf("Printing time: %s", ctime(&buffer.st_mtime));
-  // printf("Printing\n", );
+  char s[100];
+  sprintf(s, "%o", buffer.st_mode);
+  printf("Printing permissions in ls -l form: %s\n", convertpermissions(s));
   return 0;
 }
