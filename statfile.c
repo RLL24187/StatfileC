@@ -5,6 +5,7 @@
 #include <errno.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <time.h>
 
 // There is a function called stat. It is used to get information about a file. Write a program that uses stat to display the following information about a file:
 // file size
@@ -22,8 +23,13 @@
 int main(){
   struct stat buffer;
   stat("./statfile.c", &buffer);
-  printf("Printing file size in bytes: %d\n", buffer.st_size);
-  // printf("Printing file permissions: %s\n", buffer->st_mode);
+  int bytesize = buffer.st_size;
+  printf("Printing file size in bytes: %d\n", bytesize);
+  printf("Printing file size in KB: %lf\n", bytesize / 1024.000);
+  printf("Printing file size in MB: %lf\n", bytesize / 1024.000 / 1024.000);
+  printf("Printing file size in GB: %lf\n", bytesize / 1024.000 / 1024.000 / 1024.000);
+  printf("Printing file permissions: %o\n", buffer.st_mode);
+  printf("Printing time: %s", ctime(&buffer.st_mtime));
   // printf("Printing\n", );
   return 0;
 }
