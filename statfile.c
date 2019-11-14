@@ -21,36 +21,46 @@
 // Permissions are of type mode_t, which is an integer type.
 // The permissions section of the mode is stored in the last 9 bits of the mode_t data type.
 
-char * convertpermissions(char * c){ //mode_t
-  char s[100]; //storage
+void convertpermissions(char * c){ //mode_t
+  // char s[100]; //storage
   int i;
+  printf("-");
   for (i = 3; i < 6; i++){
     if (*(c + i) == '0'){
-      s = strcat(s, "---");
+      // s = strcat(s, "---");
+      printf("---");
     }
     else if (*(c + i) == '1'){
-      s = strcat(s, "--x");
+      // s = strcat(s, "--x");
+      printf("--x");
     }
     else if (*(c + i) == '2'){
-      s = strcat(s, "-w-");
+      // s = strcat(s, "-w-");
+      printf("-w-");
     }
     else if (*(c + i) == '3'){
-      s = strcat(s, "-wx");
+      // s = strcat(s, "-wx");
+      printf("-wx");
     }
     else if (*(c + i) == '4'){
-      s = strcat(s, "r--");
+      // s = strcat(s, "r--");
+      printf("r--");
     }
     else if (*(c + i) == '5'){
-      s = strcat(s, "r-x");
+      // s = strcat(s, "r-x");
+      printf("r-x");
     }
     else if (*(c + i) == '6'){
-      s = strcat(s, "rw-");
+      // s = strcat(s, "rw-");
+      printf("rw-");
     }
-    else{
-      s = strcat(s, "rwx");
+    else{ //file permissions is 7
+      // s = strcat(s, "rwx");
+      printf("rwx");
     }
-    return s;
+    // return s;
   }
+    printf("\n");
 //   sprintf ( string, “%d %c %f”, value, c, flt ) ;
 //
 // where,
@@ -70,6 +80,8 @@ int main(){
   printf("Printing time: %s", ctime(&buffer.st_mtime));
   char s[100];
   sprintf(s, "%o", buffer.st_mode);
-  printf("Printing permissions in ls -l form: %s\n", convertpermissions(s));
+  // printf("Printing permissions in ls -l form: %s\n", convertpermissions(s));
+  printf("Printing permissions in ls -l form: \n");
+  convertpermissions(s);
   return 0;
 }
